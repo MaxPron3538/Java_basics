@@ -24,11 +24,7 @@ public class Printer
 
     void print(String text,String nameText,int numberOfPages)
     {
-        if(nameText != "" & numberOfPages != 0) append(text,nameText,numberOfPages);
-
-        else if(nameText != "" & numberOfPages <= 0) append(text,nameText);
-
-        else append(text);
+        System.out.println(queue);
 
         clear();
     }
