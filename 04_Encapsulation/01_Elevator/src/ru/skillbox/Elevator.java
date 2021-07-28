@@ -2,9 +2,9 @@ package ru.skillbox;
 
 public class Elevator
 {
-    public int minFloor;
-    public int currentFloor = 1;
-    public int maxFloor;
+    private int minFloor;
+    private int currentFloor = 1;
+    private int maxFloor;
 
     Elevator(int minFloor,int maxFloor)
     {
@@ -12,22 +12,22 @@ public class Elevator
         this.maxFloor = maxFloor;
     }
 
-    int getCurrentFloor()
+    public int getCurrentFloor()
     {
        return currentFloor;
     }
 
-    void moveDown()
+    public void moveDown()
     {
       currentFloor = currentFloor - 1;
     }
 
-    void  moveUp()
+    public void  moveUp()
     {
       currentFloor = currentFloor + 1;
     }
 
-    void move(int floor)
+    public void move(int floor)
     {
        if(floor > maxFloor | floor < minFloor)  System.out.println("Error: Incorrect data,please try again!");
 
