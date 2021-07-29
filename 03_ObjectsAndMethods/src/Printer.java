@@ -1,34 +1,46 @@
 public class Printer
 {
-    String queue;
-    int generalPrintedNumber;
+    private String queue;
+    private int allPrintingCountPage;
+    private int pendingPagesCount;
 
-    String append(String text){ return queue += text; }
-
-    String append(String text,String nameText) { return queue += append(text)  + "\n" + "name: " + nameText; }
-
-    String append(String text,String nameText,int numberOfPages)
+    public void append(String text)
     {
-        getPendingPagesCount(numberOfPages);
-        getPrintedPagesCount(numberOfPages);
-
-        return queue += append(text,nameText) + "number of pages: " + numberOfPages;
+        queue = queue + "Текст:" + text + "\n";
     }
 
-    int getPendingPagesCount(int addedGeneralNumber){ return addedGeneralNumber;}
-
-    int getPrintedPagesCount(int printedNumberOfPages)
+    public void append(String text,String nameText)
     {
-        return generalPrintedNumber += printedNumberOfPages;
+        queue = queue + "Текст:" + text + "\nНаименование:" +nameText + "\n";
     }
 
-    void print(String text,String nameText,int numberOfPages)
+    public void append(String text,String nameText,int countPage)
     {
+        queue = queue + "Текст: " + text + "\tНаименование: "+nameText + "\tСтраниц:" + countPage + "\n";
+        pendingPagesCount = pendingPagesCount + countPage;
+    }
+
+    public int getPendingCountPages(){ return pendingPagesCount;}
+
+    public int getAllCountPages()
+    {
+        return allPrintingCountPage;
+    }
+
+    public void print()
+    {
+        System.out.println ("\nПечатаем следующие документы :\n");
         System.out.println(queue);
+        queue = "";
+        allPrintingCountPage = allPrintingCountPage + pendingPagesCount;
 
         clear();
     }
 
-    void clear() { queue = ""; }
+    public void clear()
+    {
+        queue = "";
+        pendingPagesCount = 0;
+    }
 
 }
