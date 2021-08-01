@@ -8,16 +8,16 @@ public class Main {
 
         Goods InitialGoods = new Goods(dimensions,24,13345656,true,"345321dw3",false);
 
-        Goods ChangedGoods = InitialGoods.changePropertyOfAddress(36647);
+        Goods ChangedGoods = InitialGoods.changeProperties(36647);
 
         dimensions = new Dimensions(34.5,45.6,67);
 
-        ChangedGoods = ChangedGoods.changePropertyOfDimensions(dimensions);
+        ChangedGoods = ChangedGoods.changeProperties(dimensions);
 
-        ChangedGoods = ChangedGoods.changePropertyOfWeight(36);
+        ChangedGoods = ChangedGoods.changeProperties(36);
 
-        InitialGoods.print(dimensions);
-        ChangedGoods.print(dimensions);
+        InitialGoods.print();
+        ChangedGoods.print();
 
     }
 }

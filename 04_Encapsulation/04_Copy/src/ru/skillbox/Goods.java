@@ -63,7 +63,7 @@ public class Goods
         return new Goods(dimensions,weight,deliveryAddress,possibleToFlip,registrationNumber,fragileGoods);
     }
 
-    public void print(Dimensions dimensions)
+    public void print()
     {
         System.out.println("Dimensions: " + dimensions.print() + "\n" + "weight: " + weight + "\n" + "delivery address: " + deliveryAddress + "\n" + "possible To Flip: " + possibleToFlip + "\n" + "registration Number: " + registrationNumber + "\n" + "fragile goods: " + fragileGoods);
     }
