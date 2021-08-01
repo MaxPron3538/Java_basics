@@ -48,17 +48,17 @@ public class Goods
         this.fragileGoods = fragileGoods;
     }
 
-    Goods changePropertyOfWeight(double weight)
+    Goods changeProperties(double weight)
     {
         return new Goods(dimensions,weight,deliveryAddress,possibleToFlip,registrationNumber,fragileGoods);
     }
 
-    Goods changePropertyOfDimensions(Dimensions dimensions)
+    Goods changeProperties(Dimensions dimensions)
     {
         return new Goods(dimensions,weight,deliveryAddress,possibleToFlip,registrationNumber,fragileGoods);
     }
 
-    Goods changePropertyOfAddress(int deliveryAddress)
+    Goods changeProperties(int deliveryAddress)
     {
         return new Goods(dimensions,weight,deliveryAddress,possibleToFlip,registrationNumber,fragileGoods);
     }
