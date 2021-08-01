@@ -14,4 +14,9 @@ public final class Book
         this.numberOfPages = numberOfPages;
         this.ISBN = ISBN;
     }
+
+    public String getName(){return name;}
+    public String getNameOfAuthor(){return getNameOfAuthor();}
+    public int getNumberOfPages(){return getNumberOfPages();}
+    public int getISBN(){return ISBN;}
 }

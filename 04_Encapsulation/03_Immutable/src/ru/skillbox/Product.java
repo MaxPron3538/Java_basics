@@ -19,7 +19,12 @@ public class Product
 
     public int getPrice()
     {
-       return  price;
+       return price;
+    }
+
+    public void setPrice(int price)
+    {
+        this.price = price;
     }
 
 }
