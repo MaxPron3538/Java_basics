@@ -2,12 +2,12 @@ package ru.skillbox;
 
 public class Computer
 {
-   private final CPU cpu;
-   private final RAM ram;
-   private final HardDisk hardDisk;
-   private final Keyboard keyboard;
-   private final Screen screen;
-   private  String name;
+   private CPU cpu;
+   private RAM ram;
+   private HardDisk hardDisk;
+   private Keyboard keyboard;
+   private Screen screen;
+   private final String name;
    private final String vendor;
 
    Computer(String vendor,String name,CPU cpu, RAM ram, HardDisk hardDisk, Keyboard keyboard, Screen screen)
@@ -32,9 +32,24 @@ public class Computer
               + "\n" + "Hard Disk - " + hardDisk.toString() + "\n" + "Keyboard - " + keyboard.toString() + "\n" + "Screen - " + screen.toString();
    }
 
-   public void setName(String name)
-   {
-      this.name = name;
+   public void setCpu(CPU cpu) {
+      this.cpu = cpu;
+   }
+
+   public void setRam(RAM ram) {
+      this.ram = ram;
+   }
+
+   public void setHardDisk(HardDisk hardDisk) {
+      this.hardDisk = hardDisk;
+   }
+
+   public void setKeyboard(Keyboard keyboard) {
+      this.keyboard = keyboard;
+   }
+
+   public void setScreen(Screen screen) {
+      this.screen = screen;
    }
 
    public String getName() {

@@ -22,9 +22,7 @@ public final class Keyboard
         return type;
     }
 
-    public boolean getBackType() {
-        return backlight;
-    }
+    public boolean getBacklight() { return backlight; }
 
     public double getWeight() {
         return weight;

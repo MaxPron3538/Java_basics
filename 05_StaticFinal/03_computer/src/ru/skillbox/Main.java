@@ -14,7 +14,7 @@ public class Main
 
         HardDisk hardDisk = new HardDisk(HardDiskType.HDD,1000,1000);
 
-        Keyboard keyboard = new Keyboard(KeyboardType.MechanicalKeyboard,true,700);
+        Keyboard keyboard = new Keyboard(KeyboardType.MECHANICALKEYBOARD,true,700);
 
         Screen screen = new Screen(30,TypeScreen.TN,5000);
 
