@@ -3,7 +3,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Main {
 
-  public static int cycleWord(char[] str)
+  public static int designateNumericSymbol(char[] str)
   {
     int count = 0;
 
@@ -16,7 +16,7 @@ public class Main {
     return 0;
   }
 
-  public static String regSymbol(String text)
+  public static String selectRegularSymbol(String text)
   {
     if(text.contains(" ")) return " ";
 
@@ -33,10 +33,10 @@ public class Main {
 
     while (text.length() > 0) {
 
-      String subStr = text.substring(0, text.indexOf(regSymbol(text)));
-      text = text.replaceFirst(subStr + regSymbol(text), "");
+      String subStr = text.substring(0, text.indexOf(selectRegularSymbol(text)));
+      text = text.replaceFirst(subStr + selectRegularSymbol(text), "");
 
-      if (cycleWord(subStr.toCharArray()) == 0)
+      if (designateNumericSymbol(subStr.toCharArray()) == 0)
         sumSalary += Integer.parseInt(String.valueOf(subStr));
     }
     System.out.println(sumSalary);
