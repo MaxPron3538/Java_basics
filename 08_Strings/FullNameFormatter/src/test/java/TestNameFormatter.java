@@ -81,7 +81,7 @@ public class TestNameFormatter {
     }
 
     @Test
-    @DisplayName("Текст = Иван Иван Иванович вв2ввв")
+    @DisplayName("Текст = Иван Иван Иванович вввввв")
     void superfluousWord() {
         launchApplication(
                 collectTestInput("Иван Иван Иванович ввввв"),
