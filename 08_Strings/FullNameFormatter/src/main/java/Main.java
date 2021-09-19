@@ -18,7 +18,7 @@ public class Main {
     boolean result = false;
     for(int i = 0;i < arr.length;i++)
     {
-      if(arr[i] == ' ' | arr[i] == '-') continue;
+      if(arr[i] == ' ' || arr[i] == '-') continue;
 
       if(Character.isDigit(arr[i])) result = false;
 

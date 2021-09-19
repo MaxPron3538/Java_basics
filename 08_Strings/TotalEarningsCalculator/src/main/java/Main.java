@@ -35,9 +35,9 @@ public class Main {
 
     while (count < text.length())
     {
-      if(text.indexOf(subStr) != text.lastIndexOf(subStr) & text.indexOf(subStr) >= offset){
+      if(text.indexOf(subStr) != text.lastIndexOf(subStr) & text.indexOf(subStr) >= offset)
         offset = text.indexOf(subStr) + subStr.length();
-      }
+
       else offset = text.lastIndexOf(subStr) + subStr.length();
 
       subStr = text.substring(offset,selectRegularSymbol(text,offset));
