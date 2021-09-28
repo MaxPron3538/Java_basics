@@ -9,6 +9,15 @@ public class TwoDimensionalArray {
         // [ , X,  ]
         // [X,  , X]
 
-        return new char[0][0];
+        char[][] arr = new char[size][size];
+
+        for(int i = 0;i < size;i++) {
+            for (int j = 0; j < size; j++)
+            {
+                if(j == i | j == size-1-i) arr[i][j] = 'X';
+                else arr[i][j] = ' ';
+            }
+        }
+        return arr;
     }
 }
