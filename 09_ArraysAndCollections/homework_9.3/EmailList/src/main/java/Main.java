@@ -1,8 +1,14 @@
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     public static final String WRONG_EMAIL_ANSWER = "Неверный формат email";
-    
+    public static final String WRONG_COMMAND_INPUT = "Неверная команда ввода";
+    public static final String List = "LIST";
+    public static final String Add = "ADD";
+
+
     /* TODO:
         Пример вывода списка Email, после ввода команды LIST в консоль:
         test@test.com
@@ -17,17 +23,42 @@ public class Main {
         "Неверный формат email"
     */
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        String regex = "\\w*@skillbox|\\w*@skillbox[.]ru|\\w*@skillboxru|\\w*@mail|\\w*@mail[.]ru|\\w*mailru";
+        String regexComm = "ADD|LIST";
+        Pattern pattern = Pattern.compile(regex);
+        Pattern patternComm = Pattern.compile(regexComm);
         Scanner scanner = new Scanner(System.in);
-        
-        while (true) {
+        EmailList emailList = new EmailList();
+
+        while (true)
+        {
             String input = scanner.nextLine();
-            if (input.equals("0")) {
-                break;
+            Matcher matcher = patternComm.matcher(input);
+
+            if (input.equals("0") | !matcher.find()){
+                System.out.println(WRONG_COMMAND_INPUT);
+                continue;
             }
-            
-            //TODO: write code here
-            
+
+            switch (matcher.group()) {
+                case Add: {
+                    input = input.replaceFirst(Add + "\\s*", "");
+                    matcher = pattern.matcher(input);
+
+                    if(matcher.matches()){
+                        System.out.println(WRONG_EMAIL_ANSWER);
+                        break;
+                    }
+                    emailList.add(input);
+                    break;
+                }
+                case List: {
+                    emailList.outputList();
+                    break;
+                }
+            }
         }
     }
 }

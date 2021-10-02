@@ -59,8 +59,9 @@ class EmailListTest {
     @DisplayName("Проверка возврата списка адресов в алфавитном порядке")
     void testSortedEmails() {
         String firstEmail = "hello@skillbox.ru";
-        String secondEmail = "asgard@yggdrasil.com";
         String thirdEmail = "hello@mail.ru";
+        String secondEmail = "asgard@yggdrasil.com";
+
 
         emailList.add(firstEmail);
         emailList.add(secondEmail);
