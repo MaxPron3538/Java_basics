@@ -14,8 +14,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <checkstyle-maven-plugin.version>3.1.1</checkstyle-maven-plugin.version>
-    <junit.platform.version>5.6.2</junit.platform.version>
-    <puppycrawl.version>8.34</puppycrawl.version>
+    <junit.platform.version>5.8.0</junit.platform.version>
+    <puppycrawl.version>8.45.1</puppycrawl.version>
     <checkstyle.config.remote>
       https://raw.githubusercontent.com/skillbox-java/checkstyle/master/checkstyle_M4.xml
     </checkstyle.config.remote>
@@ -76,6 +76,12 @@
       <groupId>com.puppycrawl.tools</groupId>
       <artifactId>checkstyle</artifactId>
       <version>${puppycrawl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
