@@ -3,7 +3,7 @@ import java.util.*;
 
 public class DepositAccount extends BankAccount
 {
-    ArrayList<LocalDate> lastIncome = new ArrayList<>();
+    LocalDate lastIncome;
 
     @Override
     public double getAmount() {
@@ -11,20 +11,24 @@ public class DepositAccount extends BankAccount
     }
 
     @Override
-    public void put(double amountToPut) {
-        lastIncome.add(LocalDate.now());
+    public void put(double amountToPut)
+    {
+        lastIncome = LocalDate.now();
         super.put(amountToPut);
     }
 
     @Override
-    public void take(double amountToTake)
+    public boolean take(double amountToTake)
     {
-        if(lastIncome.size() > 1)
-        {
-            if (lastIncome.get(lastIncome.size()-1).getMonthValue() - lastIncome.get(lastIncome.size()-2).getMonthValue() >= 1)
-            {
-                super.take(amountToTake);
-            }
+         if (LocalDate.now().getMonthValue() - lastIncome.getMonthValue() > 0 | LocalDate.now().getYear() - lastIncome.getYear() > 0) {
+            return super.take(amountToTake);
          }
+         return false;
+    }
+
+    @Override
+    public boolean send(BankAccount receiver,double amount)
+    {
+        return super.send(receiver,amount);
     }
 }

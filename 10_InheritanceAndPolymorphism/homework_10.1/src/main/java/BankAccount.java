@@ -17,12 +17,24 @@ public class BankAccount
     }
   }
 
-  public void take(double amountToTake){
+  public boolean take(double amountToTake){
     //TODO: реализуйте метод и удалите todo
     // метод списывает деньги со счета
     if(amountToTake < bankAmount)
     {
       bankAmount -= amountToTake;
+      return true;
     }
+    return false;
+  }
+
+  public boolean send(BankAccount receiver, double amount)
+  {
+    if(take(amount))
+    {
+      receiver.put(amount);
+      return true;
+    }
+    return false;
   }
 }
