@@ -3,7 +3,7 @@ import java.util.*;
 
 public class DepositAccount extends BankAccount
 {
-    LocalDate lastIncome;
+    private LocalDate lastIncome;
 
     @Override
     public double getAmount() {
@@ -29,6 +29,10 @@ public class DepositAccount extends BankAccount
     @Override
     public boolean send(BankAccount receiver,double amount)
     {
-        return super.send(receiver,amount);
+        if(take(amount))
+        {
+            return super.send(receiver,amount);
+        }
+        return false;
     }
 }
