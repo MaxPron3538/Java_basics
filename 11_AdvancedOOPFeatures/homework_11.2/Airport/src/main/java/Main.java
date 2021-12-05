@@ -20,13 +20,15 @@ public class Main {
 
     public static List<Flight> findPlanesLeavingInTheNextTwoHours(Airport airport) {
         //TODO Метод должден вернуть список рейсов вылетающих в ближайшие два часа.
+        int twoHours = 7200000;
+        int hourInMinutes = 60;
         Date currentDate = new Date(System.currentTimeMillis());
-        Date inTwoHours = new Date(System.currentTimeMillis() + 2*3600000);
+        Date inTwoHours = new Date(System.currentTimeMillis() + twoHours);
 
         Stream<Flight> flightStream = airport.getTerminals()
               .stream().flatMap(x -> x.getFlights().stream()
-                    .filter(y -> y.getDate().getHours()*60+y.getDate().getMinutes() >= currentDate.getHours()*60+currentDate.getMinutes()
-                          && y.getDate().getHours()*60+y.getDate().getMinutes() <= inTwoHours.getHours()*60+inTwoHours.getMinutes()));
+                    .filter(y -> y.getDate().getHours()*hourInMinutes+y.getDate().getMinutes() >= currentDate.getHours()*hourInMinutes+currentDate.getMinutes()
+                          && y.getDate().getHours()*hourInMinutes+y.getDate().getMinutes() <= inTwoHours.getHours()*hourInMinutes+inTwoHours.getMinutes()));
 
       return flightStream.collect(Collectors.toList());
     }
