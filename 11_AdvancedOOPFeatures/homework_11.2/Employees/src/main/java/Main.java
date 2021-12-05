@@ -1,4 +1,5 @@
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -13,6 +14,12 @@ public class Main {
     public static Employee findEmployeeWithHighestSalary(List<Employee> staff, int year) {
         //TODO Метод должен вернуть сотрудника с максимальной зарплатой среди тех,
         // кто пришёл в году, указанном в переменной year
-        return null;
+
+        Optional<Employee> optionalEmployee = staff.stream()
+             .filter(x -> x.getWorkStart()
+                  .toString().contains(String.valueOf(year)))
+                    .max(Comparator.comparing(Employee::getSalary));
+
+        return optionalEmployee.get();
     }
 }

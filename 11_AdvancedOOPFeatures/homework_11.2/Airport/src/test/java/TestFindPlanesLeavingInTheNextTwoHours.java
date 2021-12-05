@@ -20,6 +20,8 @@ public class TestFindPlanesLeavingInTheNextTwoHours {
     private static final int HOUR = 3_600_000;
     private static final int THREE_HOURS = 10_800_000;
     private static final int HOUR_AND_HALF = 5_400_000;
+    private static final int TWO_HOURS = 7_200_000;
+    private static final int HALF_AN_HOUR = 1_300_000;
     private static final String[] companyCodes = new String[]{"SU", "AA", "AR", "AF", "B2", "FV"};
 
     private static String stringify(List<Flight> flights) {
@@ -35,18 +37,23 @@ public class TestFindPlanesLeavingInTheNextTwoHours {
                 .forEach(terminal -> {
                     Flight expectedFlight1 = generateDepartureFlight(generateDate(HOUR));
                     Flight expectedFlight2 = generateDepartureFlight(generateDate(HOUR_AND_HALF));
+                    Flight expectedFlight3 = generateArrivalFlight(generateDate(HALF_AN_HOUR));
+                    Flight expectedFlight4 = generateArrivalFlight(generateDate(TWO_HOURS));
+
                     terminal.addFlight(expectedFlight1);
                     terminal.addFlight(expectedFlight2);
+                    terminal.addFlight(expectedFlight3);
+                    terminal.addFlight(expectedFlight4);
                     terminal.addFlight(generateDepartureFlight(generateDate(THREE_HOURS)));
                     terminal.addFlight(generateDepartureFlight(generateDate(THREE_HOURS)));
-                    terminal.addFlight(generateArrivalFlight(generateDate(HOUR)));
-                    terminal.addFlight(generateArrivalFlight(generateDate(HOUR_AND_HALF)));
                     terminal.addFlight(generateArrivalFlight(generateDate(THREE_HOURS)));
                     terminal.addFlight(generateArrivalFlight(generateDate(-THREE_HOURS)));
                     terminal.addFlight(generateDepartureFlight(generateDate(-THREE_HOURS)));
 
                     expectedFlights.add(expectedFlight1);
                     expectedFlights.add(expectedFlight2);
+                    expectedFlights.add(expectedFlight3);
+                    expectedFlights.add(expectedFlight4);
                     terminals.add(terminal);
                 });
         return terminals;
@@ -75,6 +82,7 @@ public class TestFindPlanesLeavingInTheNextTwoHours {
     @Test
     @DisplayName("Поиск рейсов вылетающих в ближайшие два часа")
     void searchFlight() {
+
         Airport airport = Airport.getInstance();
         List<Terminal> terminals = generateRandomTerminals();
         airport.getTerminals().clear();
@@ -83,10 +91,10 @@ public class TestFindPlanesLeavingInTheNextTwoHours {
         List<Flight> actualFlight = Main.findPlanesLeavingInTheNextTwoHours(airport);
 
         assertIterableEquals(expectedFlights, actualFlight,
-                String.join(", ", String.format("%nExpected:%s%n%nActual:%s%n%n",
-                        stringify(expectedFlights),
-                        stringify(actualFlight))
-                ));
+        String.join(", ", String.format("%nExpected:%s%n%nActual:%s%n%n",
+                stringify(expectedFlights),
+                stringify(actualFlight))
+        ));
 
     }
 
