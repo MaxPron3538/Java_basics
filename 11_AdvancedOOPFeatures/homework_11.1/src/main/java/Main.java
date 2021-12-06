@@ -16,12 +16,11 @@ public class Main {
 
     public static void sortBySalaryAndAlphabet(List<Employee> staff) {
         //TODO Метод должен отсортировать сотрудников по заработной плате и алфавиту.
-        Collections.sort(staff,(o1,o2)->{
-            if(o1.getSalary().compareTo(o2.getSalary()) == 0){
-              return o1.getName().compareTo(o2.getName());
-            }
-            return o1.getSalary().compareTo(o2.getSalary());
-        });
+
+        Comparator<Employee> comparator = Comparator.comparing(o1 -> o1.getSalary());
+        comparator = comparator.thenComparing(o2 -> o2.getName());
+
+        Collections.sort(staff,comparator);
 
         staff.forEach(System.out::println);
     }
