@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ public class ExceptionTests {
     void moreThenFourElementsInputString() {
         final String input = "Василий Петров vasily.petrov@gmail.com +79215637722 5слово";
 
-        assertThrows(Throwable.class, () -> storage.addCustomer(input),
+       assertThrows(Throwable.class,() -> storage.addCustomer(input),
                 "Не выброшено исключение при количестве элементов в строке больше 4");
     }
 
@@ -54,7 +55,7 @@ public class ExceptionTests {
 
     @Test
     @DisplayName("Тест добавления корректных данных Customer")
-    void insertCorrectData() {
+    void insertCorrectData() throws Throwable {
         final String name = "Василий Петров";
         final String email = "hello@skillbox.ru";
         final String phone = "+79991234567";
