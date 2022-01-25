@@ -27,8 +27,6 @@ public class Main {
     public static void main(String[] args) {
         RouteCalculator calculator = getRouteCalculator();
 
-        logger = LogManager.getRootLogger();
-
         logsOfExistingStations();
 
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
@@ -48,6 +46,8 @@ public class Main {
 
     private static void logsOfExistingStations()
     {
+        logger = LogManager.getLogger("info");
+
         for(int num = 1;num <= numberLines;num++) {
             for (Station searchStation : stationIndex.getLine(num).getStations()) {
                 logger.info(searchStation.getName());
@@ -84,16 +84,17 @@ public class Main {
             Station station = stationIndex.getStation(line);
 
             if (station != null) {
-
                 return station;
             }
-            logger.warn("Станция не найдена: " + line);
+            logger = LogManager.getRootLogger();
+            logger.error("Станция не найдена: " + line);
             System.out.println("Станция не найдена :(");
         }
     }
 
     private static void createStationIndex() {
         stationIndex = new StationIndex();
+        logger = LogManager.getLogger("exception");
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonData = (JSONObject) parser.parse(getJsonFile());
@@ -108,7 +109,7 @@ public class Main {
             parseConnections(connectionsArray);
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
     }
 
@@ -162,12 +163,13 @@ public class Main {
 
     private static String getJsonFile() {
         StringBuilder builder = new StringBuilder();
+        logger = LogManager.getLogger("exception");
         try {
             List<String> lines = Files.readAllLines(Paths.get(DATA_FILE));
             lines.forEach(line -> builder.append(line));
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
         return builder.toString();
     }

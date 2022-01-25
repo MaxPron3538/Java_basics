@@ -18,10 +18,14 @@
     </appenders>
 
     <loggers>
-        <root level="info">
-            <appender-ref ref="MyFileInfo" level="info"/>
-            <appender-ref ref="MyFileErrors" level="warn"/>
-            <appender-ref ref="MyFileExceptions" level="error"/>
+        <Logger name="info" level="info">
+            <AppenderRef ref="MyFileInfo"/>
+        </Logger>
+        <Logger name="exception" level="warn">
+            <AppenderRef ref="MyFileExceptions"/>
+        </Logger>
+        <root level="error">
+            <appender-ref ref="MyFileErrors" level="error"/>
         </root>
     </loggers>
 
