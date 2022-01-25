@@ -1,5 +1,6 @@
 import core.Line;
 import core.Station;
+import org.apache.logging.log4j.LogManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,14 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.Logger;
+
+
 public class Main {
     private static final String DATA_FILE = "src/main/resources/map.json";
     private static Scanner scanner;
+
+    private static int numberLines = 5;
+
+    private static Logger logger;
 
     private static StationIndex stationIndex;
 
     public static void main(String[] args) {
         RouteCalculator calculator = getRouteCalculator();
+
+        logger = LogManager.getRootLogger();
+
+        logsOfExistingStations();
 
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
         scanner = new Scanner(System.in);
@@ -31,6 +43,15 @@ public class Main {
 
             System.out.println("Длительность: " +
                     RouteCalculator.calculateDuration(route) + " минут");
+        }
+    }
+
+    private static void logsOfExistingStations()
+    {
+        for(int num = 1;num <= numberLines;num++) {
+            for (Station searchStation : stationIndex.getLine(num).getStations()) {
+                logger.info(searchStation.getName());
+            }
         }
     }
 
@@ -56,13 +77,17 @@ public class Main {
     }
 
     private static Station takeStation(String message) {
+
         for (; ; ) {
             System.out.println(message);
             String line = scanner.nextLine().trim();
             Station station = stationIndex.getStation(line);
+
             if (station != null) {
+
                 return station;
             }
+            logger.warn("Станция не найдена: " + line);
             System.out.println("Станция не найдена :(");
         }
     }
@@ -83,6 +108,7 @@ public class Main {
             parseConnections(connectionsArray);
         } catch (Exception ex) {
             ex.printStackTrace();
+            logger.error(ex.getMessage());
         }
     }
 
@@ -141,6 +167,7 @@ public class Main {
             lines.forEach(line -> builder.append(line));
         } catch (Exception ex) {
             ex.printStackTrace();
+            logger.error(ex.getMessage());
         }
         return builder.toString();
     }
