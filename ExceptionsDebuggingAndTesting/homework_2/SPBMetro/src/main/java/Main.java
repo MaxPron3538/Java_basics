@@ -18,7 +18,7 @@ public class Main {
     private static final String DATA_FILE = "src/main/resources/map.json";
     private static Scanner scanner;
 
-    private static int numberLines = 5;
+    private static int numLine = 1;
 
     private static Logger logger;
 
@@ -48,10 +48,11 @@ public class Main {
     {
         logger = LogManager.getLogger("info");
 
-        for(int num = 1;num <= numberLines;num++) {
-            for (Station searchStation : stationIndex.getLine(num).getStations()) {
+        while(stationIndex.getLine(numLine) != null){
+            for (Station searchStation : stationIndex.getLine(numLine).getStations()) {
                 logger.info(searchStation.getName());
             }
+            numLine++;
         }
     }
 
@@ -86,7 +87,7 @@ public class Main {
             if (station != null) {
                 return station;
             }
-            logger = LogManager.getRootLogger();
+            logger = LogManager.getLogger("error");
             logger.error("Станция не найдена: " + line);
             System.out.println("Станция не найдена :(");
         }
@@ -94,7 +95,7 @@ public class Main {
 
     private static void createStationIndex() {
         stationIndex = new StationIndex();
-        logger = LogManager.getLogger("exception");
+        logger = LogManager.getLogger("warn");
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonData = (JSONObject) parser.parse(getJsonFile());
