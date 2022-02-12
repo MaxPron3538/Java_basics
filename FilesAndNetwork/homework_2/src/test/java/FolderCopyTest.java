@@ -41,7 +41,6 @@ public class FolderCopyTest {
         writeContent(filesSourceDirectory);
 
         FileUtils.copyFolder(sourceDirectory.toString(), destinationDirectory.toString());
-
         assertPaths(filesSourceDirectory, sourceDirectory, destinationDirectory);
     }
 
