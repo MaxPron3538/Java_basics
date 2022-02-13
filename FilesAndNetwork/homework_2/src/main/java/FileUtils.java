@@ -13,10 +13,11 @@ public class FileUtils {
         // TODO: write code copy content of sourceDirectory to destinationDirectory
 
         File sourceFile = new File(sourceDirectory);
+        File[] listFiles = sourceFile.listFiles();
 
-        if (sourceFile.listFiles() != null) {
+        if (listFiles != null) {
 
-            for (File file : sourceFile.listFiles()) {
+            for (File file : listFiles) {
                 String copyDirPath = destinationDirectory.concat(file.getPath().substring(file.getPath().lastIndexOf("\\")));
 
                 if (file.isDirectory()) {
