@@ -2,10 +2,10 @@ import jakarta.persistence.Column;
 
 import java.io.Serializable;
 
-public class Key implements Serializable {
-    public Key(){}
+public class LinkedPurchaseId implements Serializable {
+    public LinkedPurchaseId(){}
 
-    public Key(int studentId,int courseId){
+    public LinkedPurchaseId(int studentId, int courseId){
         this.studentId = studentId;
         this.courseId = courseId;
     }

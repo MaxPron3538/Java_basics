@@ -1,8 +1,5 @@
-import com.mysql.cj.xdevapi.SqlResult;
-import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -11,8 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args){
@@ -38,13 +33,13 @@ public class Main {
             LinkedPurchaseList purchaseList = new LinkedPurchaseList();
 
             if(mapLinkedPurchaseStudent.get(purchase.getId().getStudentName()) != null) {
-                purchaseList.setId(new Key(mapLinkedPurchaseStudent.get(purchase.getId().getStudentName()),countCourse));
+                purchaseList.setId(new LinkedPurchaseId(mapLinkedPurchaseStudent.get(purchase.getId().getStudentName()),countCourse));
                 session.save(purchaseList);
                 countCourse++;
                 continue;
             }
             if(mapLinkedPurchaseCourse.get(purchase.getId().getCourseName()) != null) {
-                purchaseList.setId(new Key(countStudent,mapLinkedPurchaseCourse.get(purchase.getId().getCourseName())));
+                purchaseList.setId(new LinkedPurchaseId(countStudent,mapLinkedPurchaseCourse.get(purchase.getId().getCourseName())));
                 session.save(purchaseList);
                 countStudent++;
                 continue;
@@ -52,7 +47,7 @@ public class Main {
             mapLinkedPurchaseStudent.put(purchase.getId().getStudentName(), countStudent);
             mapLinkedPurchaseCourse.put(purchase.getId().getCourseName(),countCourse);
 
-            purchaseList.setId(new Key(countStudent, countCourse));
+            purchaseList.setId(new LinkedPurchaseId(countStudent, countCourse));
             session.save(purchaseList);
             countStudent++;
             countCourse++;

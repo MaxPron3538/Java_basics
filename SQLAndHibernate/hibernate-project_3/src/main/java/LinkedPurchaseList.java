@@ -2,14 +2,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import org.checkerframework.checker.units.qual.C;
 
 @Entity
 @Table(name = "LinkedPurchaseList")
 public class LinkedPurchaseList {
 
     @EmbeddedId
-    private Key id;
+    private LinkedPurchaseId id;
 
     @Column(name = "student_id",insertable = false,updatable = false)
     private int studentId;
@@ -17,11 +16,11 @@ public class LinkedPurchaseList {
     @Column(name = "course_id",insertable = false,updatable = false)
     private int courseId;
 
-    public Key getId() {
+    public LinkedPurchaseId getId() {
         return id;
     }
 
-    public void setId(Key id) {
+    public void setId(LinkedPurchaseId id) {
         this.id = id;
     }
 }
