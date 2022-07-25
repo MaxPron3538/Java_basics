@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args){
@@ -55,5 +56,6 @@ public class Main {
         session.getTransaction().commit();
         session.close();
         sessionFactory.close();
+
     }
 }
