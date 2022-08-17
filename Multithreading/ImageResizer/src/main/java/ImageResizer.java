@@ -12,11 +12,11 @@ public class ImageResizer extends Thread{
     private int newWidth;
     private long start;
 
-    public ImageResizer(File[] files,int newWidth,String dstFolder,long start){
+    public ImageResizer(File[] files,int newWidth,String dstFolder){
         this.files = files;
         this.newWidth = newWidth;
         this.dstFolder = dstFolder;
-        this.start = start;
+        this.start = System.currentTimeMillis();;
         start();
     }
 

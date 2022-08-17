@@ -3,7 +3,12 @@ import org.imgscalr.Scalr;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Main {
 
@@ -15,7 +20,6 @@ public class Main {
         String dstFolder = "C:/Users/maxpr/Documents/dst";
 
         File srcDir = new File(srcFolder);
-        long start = System.currentTimeMillis();
         File[] files = srcDir.listFiles();
         int base = 0;
 
@@ -30,10 +34,10 @@ public class Main {
         for(int i = 0;i < countProcess;i++){
 
             File[] subFiles = Arrays.copyOfRange(evenFiles,base,stepLength);
-            new ImageResizer(subFiles,newWidth,dstFolder,start);
+            new ImageResizer(subFiles,newWidth,dstFolder);
 
             if(i < oddFiles.length){
-                new ImageResizer(Arrays.copyOfRange(oddFiles,i,i+1),newWidth,dstFolder,start);
+                new ImageResizer(Arrays.copyOfRange(oddFiles,i,i+1),newWidth,dstFolder);
             }
             base+=subEvenLength;
             stepLength+=subEvenLength;
