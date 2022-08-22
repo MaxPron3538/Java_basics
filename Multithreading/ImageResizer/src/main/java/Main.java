@@ -3,6 +3,7 @@ import org.imgscalr.Scalr;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Main {
     private static int newWidth = 300;
 
     public static void main(String[] args) {
+
         String srcFolder = "C:/Users/maxpr/Documents/src";
         String dstFolder = "C:/Users/maxpr/Documents/dst";
 
@@ -26,6 +28,7 @@ public class Main {
         if(files.length < countProcess) {
             countProcess = files.length;
         }
+
         File[] evenFiles = Arrays.copyOfRange(files,0,(files.length/countProcess) * countProcess);
         File[] oddFiles = Arrays.copyOfRange(files,evenFiles.length,files.length);
         int subEvenLength = evenFiles.length/countProcess;
@@ -33,7 +36,7 @@ public class Main {
 
         for(int i = 0;i < countProcess;i++){
 
-            File[] subFiles = Arrays.copyOfRange(evenFiles,base,stepLength);
+            File[] subFiles = Arrays.copyOfRange(files,base,stepLength);
             new ImageResizer(subFiles,newWidth,dstFolder);
 
             if(i < oddFiles.length){

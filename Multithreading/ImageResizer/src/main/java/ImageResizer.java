@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-public class ImageResizer extends Thread{
+public class ImageResizer extends  Thread{
 
     private File[] files;
     private String dstFolder;
@@ -16,8 +16,8 @@ public class ImageResizer extends Thread{
         this.files = files;
         this.newWidth = newWidth;
         this.dstFolder = dstFolder;
-        this.start = System.currentTimeMillis();;
-        start();
+        this.start = System.currentTimeMillis();
+        run();
     }
 
     @Override
@@ -40,7 +40,6 @@ public class ImageResizer extends Thread{
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         System.out.println("Duration: " + (System.currentTimeMillis() - start));
     }
 }

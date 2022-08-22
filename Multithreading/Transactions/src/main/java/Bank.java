@@ -10,6 +10,7 @@ public class Bank {
     private Map<String,Account> accounts;
     private final Random random = new Random();
     private static int sumOfTransfer = 50000;
+    private static final Object lockThread = new Object();
 
     public synchronized boolean isFraud()
         throws InterruptedException {
@@ -17,25 +18,39 @@ public class Bank {
         return random.nextBoolean();
     }
 
-    public void transfer(String fromAccountNum, String toAccountNum, long amount) {
+    private void doTransfer(Account fromAccount,Account toAccount, long amount){
+        long balanceFromAccount = fromAccount.getMoney();
+        long balanceToAccount = toAccount.getMoney();
 
-        long balanceFromAccount = accounts.get(fromAccountNum).getMoney();
-        long balanceToAccount = accounts.get(toAccountNum).getMoney();
-
-        if(amount < balanceFromAccount) {
-            if(amount > sumOfTransfer){
-                try{
+        if (amount < balanceFromAccount) {
+            if (amount > sumOfTransfer) {
+                try {
                     if (isFraud()) {
-                        accounts.get(fromAccountNum).setBlockAccount(true);
-                        accounts.get(toAccountNum).setBlockAccount(true);
+                        fromAccount.setBlockAccount(true);
+                        toAccount.setBlockAccount(true);
                     }
 
-                }catch(InterruptedException ex){
+                } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
             }
-            accounts.get(fromAccountNum).setMoney(balanceFromAccount - amount);
-            accounts.get(toAccountNum).setMoney(balanceToAccount + amount);
+            fromAccount.setMoney(balanceFromAccount - amount);
+            toAccount.setMoney(balanceToAccount + amount);
+        }
+    }
+
+
+    public void transferInHighlyConcurrent(String fromAccountNum, String toAccountNum, long amount) {
+
+        Account fromAccount = accounts.get(fromAccountNum);
+        Account toAccount = accounts.get(toAccountNum);
+
+        synchronized (lockThread) {
+            synchronized (fromAccount){
+                synchronized (toAccount){
+                    doTransfer(fromAccount,toAccount,amount);
+                }
+            }
         }
     }
 

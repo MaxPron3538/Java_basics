@@ -14,13 +14,14 @@ public class BankTests {
 
     private Bank bank;
     private List<String> listNumOfAccount;
+    private int numOfThread = 10000;
 
     @BeforeEach
     void beforeEach(){
          bank = new Bank();
          listNumOfAccount = new ArrayList<>();
 
-         for (int i = 0; i < 10000; i++) {
+         for (int i = 0; i < numOfThread; i++) {
              int accNumber = (int) (1000000 + Math.random() * 10000000);
              bank.addAccount(String.valueOf(accNumber), 100000);
              listNumOfAccount.add(String.valueOf(accNumber));
@@ -46,7 +47,7 @@ public class BankTests {
         List<Thread> threads = new ArrayList<>();
         long sumOfTransfer = 3000;
 
-        for(int i = 0;i < 1000;i++){
+        for(int i = 0;i < numOfThread;i++){
             final int count = i;
             threads.add(new Thread(() -> {
                 String numFromAccount = listNumOfAccount.get(count);
@@ -54,7 +55,7 @@ public class BankTests {
 
                 long expectedBalanceFrom = bank.getBalance(numFromAccount)-sumOfTransfer;
                 long expectedBalanceTo = bank.getBalance(numToAccount)+sumOfTransfer;
-                bank.transfer(numFromAccount,numToAccount,sumOfTransfer);
+                bank.transferInHighlyConcurrent(numFromAccount,numToAccount,sumOfTransfer);
 
                 assertEquals(expectedBalanceFrom,bank.getBalance(numFromAccount));
                 assertEquals(expectedBalanceTo,bank.getBalance(numToAccount));
@@ -68,23 +69,23 @@ public class BankTests {
         List<Thread> threads = new ArrayList<>();
         long sumOfTransfer = 58000;
 
-        for(int i = 0;i < 10000;i++){
-            final int count = i;
-            threads.add(new Thread(() -> {
-                String numFromAccount = listNumOfAccount.get(count);
-                String numToAccount = listNumOfAccount.get(listNumOfAccount.size()-count-1);
+        for (int i = 0; i < numOfThread; i++) {
+           final int count = i;
+           threads.add(new Thread(() -> {
+               String numFromAccount = listNumOfAccount.get(count);
+               String numToAccount = listNumOfAccount.get(listNumOfAccount.size() - count - 1);
 
-                long expectedBalanceFrom = bank.getBalance(numFromAccount);
-                long expectedBalanceTo = bank.getBalance(numToAccount);
-                bank.transfer(numFromAccount,numToAccount,sumOfTransfer);
+               long expectedBalanceFrom = bank.getBalance(numFromAccount);
+               long expectedBalanceTo = bank.getBalance(numToAccount);
+               bank.transferInHighlyConcurrent(numFromAccount, numToAccount, sumOfTransfer);
 
-                if(bank.getAccounts().get(numFromAccount).getBlockAccount()) {
-                    assertEquals(expectedBalanceFrom, bank.getBalance(numFromAccount));
-                    assertEquals(expectedBalanceTo, bank.getBalance(numToAccount));
-                }
-            }));
+               if (bank.getAccounts().get(numFromAccount).getBlockAccount()) {
+                  assertEquals(expectedBalanceFrom, bank.getBalance(numFromAccount));
+                  assertEquals(expectedBalanceTo, bank.getBalance(numToAccount));
+               }
+           }));
         }
         threads.forEach(s -> s.start());
-    }
 
+    }
 }
