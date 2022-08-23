@@ -39,19 +39,31 @@ public class Bank {
         }
     }
 
+    public void synchronizedTransfer(Account firstSync,Account secondSync,Account from,Account to,long amount){
+        synchronized (firstSync) {
+            synchronized (secondSync) {
+                doTransfer(from, to, amount);
+            }
+        }
+    }
 
     public void transferInHighlyConcurrent(String fromAccountNum, String toAccountNum, long amount) {
 
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
 
-        synchronized (lockThread) {
-            synchronized (fromAccount){
-                synchronized (toAccount){
-                    doTransfer(fromAccount,toAccount,amount);
-                }
+        if(fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) < 0) {
+            synchronizedTransfer(fromAccount,toAccount,fromAccount,toAccount,amount);
+
+        }else if(fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) > 0){
+            synchronizedTransfer(toAccount,fromAccount,fromAccount,toAccount,amount);
+
+        }else{
+            synchronized (lockThread){
+                synchronizedTransfer(fromAccount,toAccount,fromAccount,toAccount,amount);
             }
         }
+
     }
 
     public synchronized void addAccount(String accNumber,long balance){
