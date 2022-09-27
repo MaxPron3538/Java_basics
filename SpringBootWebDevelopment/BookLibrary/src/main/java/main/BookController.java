@@ -47,7 +47,6 @@ public class BookController {
         if (!optionalBook.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
         return new ResponseEntity<>(optionalBook.get(), HttpStatus.OK);
     }
 }
