@@ -1,56 +1,63 @@
 package main;
 
 import main.model.Product;
+import main.model.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 public class ProductsController {
 
     @Autowired
-    IStorage storage;
+    private ProductRepository repository;
 
     @GetMapping("/products/")
-    public ResponseEntity<?> list(){
-        return new ResponseEntity<>(storage.getAllProducts(),HttpStatus.OK);
+    public String list(Model model){
+        model.addAttribute("products",repository.findAll());
+        return "index";
     }
 
     @PostMapping("/products/")
-    public ResponseEntity<?> add(Product product){
-        storage.addProduct(product);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public String add(Product product,Model model){
+        repository.save(product);
+        model.addAttribute("products",repository.findAll());
+        return "index";
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<?> get(@PathVariable("id") int id){
-        Product product = storage.getProduct(id);
-        return product != null ?
-                new ResponseEntity<>(product,HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public String get(@PathVariable("id") int id,Model model){
+        Optional<Product> productOptional = repository.findById(id);
+        productOptional.ifPresent(product -> model.addAttribute("products", product));
+        return "index";
     }
 
     @PutMapping("/products/{id}")
-    public ResponseEntity<?> update(Product product,@PathVariable int id){
-        boolean updated = storage.updateProduct(product,id);
-        return updated ? new ResponseEntity<>(HttpStatus.OK)
-                :new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    public String update(Product product,@PathVariable int id){
+        if(repository.existsById(id)){
+            repository.save(product);
+        }
+        return "redirect:/products/";
     }
 
     @DeleteMapping("/products/{id}")
-    public ResponseEntity<?> delete(@PathVariable int id){
-        boolean deleted = storage.deleteProduct(id);
-        return deleted ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    public String delete(@PathVariable int id){
+        if(repository.existsById(id)){
+            repository.deleteById(id);
+        }
+        return "redirect:/products/";
     }
 
     @DeleteMapping("/products/")
-    public ResponseEntity<?> deleteList(){
-        storage.deleteAllProducts();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public String deleteList(){
+        repository.deleteAll();
+        return "index";
     }
 }

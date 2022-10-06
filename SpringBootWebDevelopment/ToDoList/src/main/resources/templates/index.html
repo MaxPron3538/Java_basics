@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Products</title>
+</head>
+<body>
+<h1 align="center">List of products</h1>
+<div>
+    <table id="list-products" align="center" style="width: 1000px; height: 50px; background-color: AliceBlue" border="2">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>price</th>
+            <th>category</th>
+            <th>description</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:utext="${product.id}"></td>
+            <td th:utext="${product.name}"></td>
+            <td th:utext="${product.price}"></td>
+            <td th:utext="${product.category}"></td>
+            <td th:utext="${product.description}"></td>
+        </tr>
+    </table>
+    <button id="add" onclick="displayFormAdd()" style="position: relative; top:40px; left: 770px; width: 1000px; height: 50px;">Add product</button>
+    <button id="update" onclick="displayFormUpdateId()" style="position: relative; top:140px; left:-235px; width: 1000px; height: 50px;">Update product</button>
+    <button id="get" onclick="displayFormGetId()" style="position: relative; top:190px; left:770px; width: 1000px; height: 50px;">Get product</button>
+    <form id="getAll" action="http://localhost:8080/products/" method="get">
+        <input onclick="displayFormGetAll()" type="submit" value="Get All products" style=" position: relative; top:240px; left: 770px; width: 1000px; height: 50px;">
+    </form>
+    <button id="delete" onclick="displayFormDeleteId()" style="position: relative; top:290px; left:770px; width: 1000px; height: 50px;">Delete product</button>
+    <form id="deleteAll" action="http://localhost:8080/products/" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <input onclick="displayFormDeleteAll()" type="submit" value="Delete All products" style=" position: relative; top:340px; left: 770px; width: 1000px; height: 50px;">
+    </form>
+
+    <form id ="form1" style="visibility: hidden; position:relative; top:-200px; left:2000px;" method="post" action="http://localhost:8080/products/">
+        <p><a>Id</a><input style="width:220px"type="text" name="id"/></p>
+        <p><a>Name</a><input style="width:195px"type="text" name="name"></p>
+        <p><a>Price</a><input style="width:200px" type="text" name="price"></p>
+        <p><a>Category</a><input style="width:175px" type="text" name="category"><p>
+        <p><a>Description</a><input type="text" name="name"><p>
+        <input style="width:250px" type="submit" value="Send" />
+    </form>
+
+    <form id ="form2"  method="post" action="http://localhost:8080/products/" style="visibility: hidden; position:relative; top: -300px; left:2000px;">
+        <input type="hidden" name="_method" value="put"/>
+        <p><a>Id</a><input id = "id-update" style="width:220px"type="text" name="id"/></p>
+        <p><a>Name</a><input style="width:195px"type="text" name="name"></p>
+        <p><a>Price</a><input style="width:200px" type="text" name="price"></p>
+        <p><a>Category</a><input style="width:175px" type="text" name="category"></p>
+        <p><a>Description</a><input type="text" name="name"></p>
+        <p><input style="width:250px" onclick="displayFormUpdate()" type="submit" value="Send"/></p>
+    </form>
+
+    <form id ="getId" action="http://localhost:8080/products/" method="get" style="visibility: hidden; position:relative; top:-500px; left:2000px;">
+        <a>Input id</a>
+        <input id="id-get" type="text" name="id" style="width:180px">
+        <p><input id="submit-get-id" onclick="displayFormGet()" type="submit" value="Send" style="width:250px"></p>
+    </form>
+
+    <form id ="deleteId" method="post" action="http://localhost:8080/products/" style="visibility: hidden; position:relative; top:-300px; left:2000px;">
+        <input type="hidden" name="_method" value="delete"/>
+        <a>Input id</a>
+        <input id="id-delete" type="text" name="id" style="width:180px">
+        <p><input id="submit-delete-id" onclick="displayFormDelete()" type="submit" value="Send" style="width:250px"></p>
+    </form>
+    <script>
+       function displayFormAdd(){
+          document.getElementById("getId").style.visibility = "hidden";
+          document.getElementById("form2").style.visibility = "hidden";
+          document.getElementById("form1").style.visibility = "visible";
+       }
+       function displayFormUpdateId(){
+          document.getElementById("form1").style.visibility = "hidden";
+          document.getElementById("getId").style.visibility = "hidden";
+          document.getElementById("form2").style.visibility = "visible";
+       }
+       function displayFormUpdate(){
+          var id = document.getElementById("id-update").value;
+          document.getElementById("form2").action+=id;
+       }
+       function displayFormGetId(){
+          document.getElementById("form1").style.visibility = "hidden";
+          document.getElementById("form2").style.visibility = "hidden";
+          document.getElementById("getId").style.visibility = "visible";
+       }
+       function displayFormGet(){
+          var id = document.getElementById("id-get").value;
+          document.getElementById("getId").action+=id;
+       }
+       function displayFormDeleteId(){
+          document.getElementById("form1").style.visibility = "hidden";
+          document.getElementById("form2").style.visibility = "hidden";
+          document.getElementById("getId").style.visibility = "hidden";
+          document.getElementById("deleteId").style.visibility = "visible";
+       }
+       function displayFormDelete(){
+          var id =  document.getElementById("id-delete").value;
+          document.getElementById("deleteId").action+=id;
+       }
+    </script>
+</div>
+</body>
+</html>
