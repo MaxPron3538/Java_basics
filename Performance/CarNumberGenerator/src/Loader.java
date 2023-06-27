@@ -10,31 +10,34 @@ public class Loader {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
+        int init = 1;
+        int step = 500;
 
-        Runnable thread1 = () -> {
-            try {
-                buildAndWriteCarNumber(1,500,"res/numbers1.txt");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        };
-
-        Runnable thread2 = () -> {
-            try {
-                buildAndWriteCarNumber(500,1000,"res/numbers2.txt");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        };
-
-        Thread run1 = new Thread(thread1);
-        Thread run2 = new Thread(thread2);
-        run1.start();
-        run2.start();
-
+        for(int i = 0;i < 2;i++){
+            runThread(init,step,i+1);
+            init=step;
+            step+=step;
+        }
         System.out.println((System.currentTimeMillis() - start) + " ms");
     }
 
+    public static void runThread(int init,int step,int count) {
+        Runnable thread = () -> {
+            try {
+                buildAndWriteCarNumber(init,step,"res/numbers" + count + ".txt");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+        Thread run = new Thread(thread);
+        run.start();
+
+        try {
+            run.join();
+        }catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+    }
     public static void buildAndWriteCarNumber(int init,int finish,String path) throws Exception {
         int regionCode = 199;
         PrintWriter writer = new PrintWriter(path);
