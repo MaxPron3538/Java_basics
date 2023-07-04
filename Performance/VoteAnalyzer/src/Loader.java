@@ -58,7 +58,7 @@ public class Loader {
 
             String name = attributes.getNamedItem("name").getNodeValue();
             String birthDay = attributes.getNamedItem("birthDay").getNodeValue();
-            DBConnection.countVoter(name,birthDay);
+           // DBConnection.countVoter(name,birthDay);
         }
         DBConnection.executeMultiInsert();
     }

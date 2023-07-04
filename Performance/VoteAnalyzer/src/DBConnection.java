@@ -8,6 +8,7 @@ public class DBConnection {
     private static String dbUser = "root";
     private static String dbPass = "tiptop";
     private static int buffSize = 10000000;
+    private static int count = 0;
 
     private static StringBuilder insertQuery = new StringBuilder();
 
@@ -30,10 +31,10 @@ public class DBConnection {
         }
         return connection;
     }
-    public static void countVoter(String name, String birthDay) throws SQLException {
+    public static void countVoter(String name, String birthDay,boolean isEnd) throws SQLException {
         birthDay = birthDay.replace('.', '-');
 
-        if(insertQuery.length() > buffSize) {
+        if(insertQuery.length() > buffSize || isEnd) {
             executeMultiInsert();
             insertQuery = new StringBuilder();
         }

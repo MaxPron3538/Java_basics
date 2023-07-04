@@ -16,7 +16,7 @@ public class XMLHandler extends DefaultHandler {
             if (qName.equals("voter")) {
                 String name = attributes.getValue("name");
                 String birthDay = attributes.getValue("birthDay");
-                DBConnection.countVoter(name,birthDay);
+                DBConnection.countVoter(name,birthDay,false);
             }
         }catch (SQLException ex){
            ex.printStackTrace();
@@ -25,5 +25,12 @@ public class XMLHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri,String localName, String qName) throws SAXException{
+        try {
+            if(qName.equals("voters")){
+                DBConnection.countVoter("","",false);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
     }
 }
