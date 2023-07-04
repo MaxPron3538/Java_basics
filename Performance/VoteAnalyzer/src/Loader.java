@@ -22,8 +22,8 @@ public class Loader {
         String fileName = "res/data-1572M.xml";
 
         long start = System.currentTimeMillis();
+
         File file = new File(fileName);
-        DBConnection.setFileLength(new File(fileName).length());
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLHandler handler = new XMLHandler();

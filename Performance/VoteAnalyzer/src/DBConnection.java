@@ -7,12 +7,10 @@ public class DBConnection {
     private static String dbName = "learn";
     private static String dbUser = "root";
     private static String dbPass = "tiptop";
-    private static long lengthFile;
+    private static int buffSize = 10000000;
+
     private static StringBuilder insertQuery = new StringBuilder();
 
-    public static void setFileLength(long length){
-        lengthFile = length;
-    }
     public static Connection getConnection() {
         if (connection == null) {
             try {
@@ -34,9 +32,9 @@ public class DBConnection {
     }
     public static void countVoter(String name, String birthDay) throws SQLException {
         birthDay = birthDay.replace('.', '-');
-        if(insertQuery.length() > 10000000 && lengthFile > (Math.pow(1024,2)*50)) {
+
+        if(insertQuery.length() > buffSize) {
             executeMultiInsert();
-            System.out.println(insertQuery.length());
             insertQuery = new StringBuilder();
         }
         else{
