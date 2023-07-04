@@ -1,15 +1,18 @@
+import java.io.File;
 import java.sql.*;
 
 public class DBConnection {
 
     private static Connection connection;
-
     private static String dbName = "learn";
     private static String dbUser = "root";
     private static String dbPass = "tiptop";
-
+    private static long lengthFile;
     private static StringBuilder insertQuery = new StringBuilder();
 
+    public static void setFileLength(long length){
+        lengthFile = length;
+    }
     public static Connection getConnection() {
         if (connection == null) {
             try {
@@ -22,27 +25,31 @@ public class DBConnection {
                     "name TINYTEXT NOT NULL, " +
                     "birthDate DATE NOT NULL, " +
                     "`count` INT NOT NULL, " +
-                    "PRIMARY KEY(id), " +
-                        "UNIQUE KEY name_date(name(50),birthDate))");
+                    "PRIMARY KEY(id))");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return connection;
     }
-
     public static void countVoter(String name, String birthDay) throws SQLException {
         birthDay = birthDay.replace('.', '-');
-        insertQuery.append(insertQuery.length() == 0 ? "" : ",").append("('").append(name).append("', '").append(birthDay).append("', 1)");
+        if(insertQuery.length() > 10000000 && lengthFile > (Math.pow(1024,2)*50)) {
+            executeMultiInsert();
+            System.out.println(insertQuery.length());
+            insertQuery = new StringBuilder();
+        }
+        else{
+            insertQuery.append(insertQuery.length() == 0 ? "" : ",").append("('").append(name).append("', '").append(birthDay).append("', 1)");
+        }
     }
     public static void executeMultiInsert() throws SQLException {
         String sql = "INSERT INTO voter_count(name, birthDate, `count`) " +
-                "VALUES" + insertQuery.toString() +
-                "ON DUPLICATE KEY UPDATE `count`=`count` + 1";
+                "VALUES" + insertQuery.toString();
         DBConnection.getConnection().createStatement().execute(sql);
     }
     public static void printVoterCounts() throws SQLException {
-        String sql = "SELECT name, birthDate, `count` FROM voter_count WHERE `count` > 1";
+        String sql = "SELECT name,birthDate,COUNT(*) as `count` from voter_count  group by name,birthDate having count > 1;";
         ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(sql);
         while (rs.next()) {
             System.out.println("\t" + rs.getString("name") + " (" +

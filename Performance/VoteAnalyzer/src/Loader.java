@@ -22,12 +22,16 @@ public class Loader {
         String fileName = "res/data-1572M.xml";
 
         long start = System.currentTimeMillis();
-
+        File file = new File(fileName);
+        DBConnection.setFileLength(new File(fileName).length());
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLHandler handler = new XMLHandler();
-        parser.parse(new File(fileName),handler);
-        DBConnection.executeMultiInsert();
+        parser.parse(file,handler);
+
+        if(file.length() < (Math.pow(1024,2)*50)){
+            DBConnection.executeMultiInsert();
+        }
 
         long end = System.currentTimeMillis();
 
