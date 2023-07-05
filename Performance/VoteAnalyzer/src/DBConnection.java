@@ -8,7 +8,6 @@ public class DBConnection {
     private static String dbUser = "root";
     private static String dbPass = "tiptop";
     private static int buffSize = 10000000;
-    private static int count = 0;
 
     private static StringBuilder insertQuery = new StringBuilder();
 
@@ -39,7 +38,9 @@ public class DBConnection {
             insertQuery = new StringBuilder();
         }
         else{
-            insertQuery.append(insertQuery.length() == 0 ? "" : ",").append("('").append(name).append("', '").append(birthDay).append("', 1)");
+            if(!birthDay.equals("")) {
+                insertQuery.append(insertQuery.length() == 0 ? "" : ",").append("('").append(name).append("', '").append(birthDay).append("', 1)");
+            }
         }
     }
     public static void executeMultiInsert() throws SQLException {

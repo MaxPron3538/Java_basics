@@ -29,7 +29,7 @@ public class Loader {
         XMLHandler handler = new XMLHandler();
         parser.parse(file,handler);
 
-        if(file.length() < (Math.pow(1024,2)*50)){
+        if(file.length() < (Math.pow(1024,2)*500)){
             DBConnection.executeMultiInsert();
         }
 
