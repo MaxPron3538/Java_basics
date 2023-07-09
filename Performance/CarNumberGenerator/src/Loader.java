@@ -1,14 +1,9 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-import java.util.stream.Collectors;
 
 public class Loader {
 
     public static void main(String[] args) {
+        /*
         long start = System.currentTimeMillis();
         int init = 1;
         int step = 500;
@@ -19,6 +14,8 @@ public class Loader {
             step+=step;
         }
         System.out.println((System.currentTimeMillis() - start) + " ms");
+
+         */
     }
 
     public static void runThread(int init,int step,int count) {
@@ -42,7 +39,7 @@ public class Loader {
         int regionCode = 199;
         PrintWriter writer = new PrintWriter(path);
         String region = padNumber(regionCode, 2);
-        char letters[] = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
+        char[] letters = {'У','К','Е','Н','Х','В','А','Р','О','С','М','Т'};
 
         for (int number = init; number < finish; number++) {
             StringBuilder builder = new StringBuilder();

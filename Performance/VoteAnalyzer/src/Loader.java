@@ -35,7 +35,7 @@ public class Loader {
 
         long end = System.currentTimeMillis();
 
-        DBConnection.printVoterCounts();
+        //DBConnection.printVoterCounts();
 
         System.out.println("time duration is - " + (end-start) + " ms");
     }
