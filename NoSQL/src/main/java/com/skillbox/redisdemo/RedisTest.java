@@ -36,6 +36,12 @@ public class RedisTest {
         out.println(log);
     }
 
+    public static void addVisit(RedisStorage redis,int user_id) throws InterruptedException {
+        redis.logPageVisit(user_id);
+        log(user_id);
+        Thread.sleep(SLEEP);
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -50,16 +56,12 @@ public class RedisTest {
 
                 if(user == paid_user){
                     user_id = (int)(1 + Math.random() * USER_CASE);
-                    redis.logPageVisit(user_id);
                     logPaidUser(user_id);
-                    log(user_id);
-                    Thread.sleep(SLEEP);
+                    addVisit(redis,user_id);
                 }
                 if (!redis.getPageUser(user)) {
                     user_id = user;
-                    redis.logPageVisit(user_id);
-                    log(user_id);
-                    Thread.sleep(SLEEP);
+                    addVisit(redis,user_id);
                 }
             }
             redis.deleteOldEntries(DELETE_SECONDS_AGO);
