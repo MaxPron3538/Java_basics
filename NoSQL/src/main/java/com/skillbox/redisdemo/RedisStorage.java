@@ -8,6 +8,7 @@ import org.redisson.client.RedisConnectionException;
 import org.redisson.config.Config;
 
 import java.util.Date;
+import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -52,6 +53,12 @@ public class RedisStorage {
         //ZADD ONLINE_USERS
         onlineUsers.add(getTs(), String.valueOf(user_id));
     }
+
+    boolean getPageUser(int user_id){
+        Optional<String> optional = onlineUsers.stream().filter(s -> s.equals(String.valueOf(user_id))).findAny();
+        return optional.isPresent();
+    }
+
 
     // Удаляет
     void deleteOldEntries(int secondsAgo)
