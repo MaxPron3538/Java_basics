@@ -28,14 +28,6 @@ public class RedisStorage {
         return new Date().getTime() / 1000;
     }
 
-    // Пример вывода всех ключей
-    public void listKeys() {
-        Iterable<String> keys = rKeys.getKeys();
-        for(String key: keys) {
-            out.println("KEY: " + key + ", type:" + rKeys.getType(key));
-        }
-    }
-
     void init() {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379").setPassword("tiptop");
@@ -66,13 +58,6 @@ public class RedisStorage {
     {
         //ZREVRANGEBYSCORE ONLINE_USERS 0 <time_5_seconds_ago>
         onlineUsers.removeRangeByScore(0, true, getTs() - secondsAgo, true);
-
-
-    }
-    int calculateUsersNumber()
-    {
-        //ZCOUNT ONLINE_USERS
-        return onlineUsers.count(Double.NEGATIVE_INFINITY, true, Double.POSITIVE_INFINITY, true);
     }
 }
 
